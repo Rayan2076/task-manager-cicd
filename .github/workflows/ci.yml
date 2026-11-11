@@ -1,0 +1,25 @@
+name: Task Manager CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  unit-tests:
+    name: Automated Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Build task manager Docker image
+        run: docker build -t task-manager:latest .
+
+      - name: Run automated unit tests
+        run: docker run --rm task-manager:latest
